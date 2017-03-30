@@ -1,8 +1,11 @@
+<img align="right" src='https://github.com/ayvytr/logger/blob/master/photos/logger/logger-logo.png' width='128' height='128'/>
 
 
-<img align="right" src='https://github.com/ayvytr/logger/blob/master/images/logger-logo.png' width='128' height='128'/>
+[![GitHub release](https://img.shields.io/github/release/Ayvytr/Logger.svg)](https://github.com/Ayvytr/Logger/releases)
+[![](https://jitpack.io/v/Ayvytr/Logger.svg)](https://jitpack.io/#Ayvytr/Logger)
+[![JCenter](https://img.shields.io/badge/jCenter-1.0.0-green.svg)](https://bintray.com/ayvytr/maven/EasyAndroid/_latestVersion)
+[![License](https://img.shields.io/badge/License-Apache--2.0%20-blue.svg)](license)
 
-## [点击返回](https://github.com/Ayvytr/EasyAndroid)
 
 # Logger
 ### Simple, pretty and powerful logger for android（简单，漂亮，强大的Android日志工具）
@@ -17,7 +20,11 @@
 	- 跳转到源代码
 	- 你想要的各种输出效果
 
-## 编译
+## JCenter
+
+	compile 'com.ayvytr:logger:1.0.0'
+
+## JitPack
 
 ### Step 1. Add the JitPack repository to your build file
 #### Add it in your root build.gradle at the end of repositories:
@@ -29,7 +36,7 @@
 		}
 ### Step 2. Add the dependency
 	dependencies {
-		        compile 'com.github.Ayvytr:logger:1.18'
+		        compile 'com.github.Ayvytr:Logger:1.0.0'
 		}
 
 
