@@ -3,7 +3,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/Ayvytr/Logger.svg)](https://github.com/Ayvytr/Logger/releases)
 [![](https://jitpack.io/v/Ayvytr/Logger.svg)](https://jitpack.io/#Ayvytr/Logger)
-[![JCenter](https://img.shields.io/badge/jCenter-1.0.0-green.svg)](https://bintray.com/ayvytr/maven/EasyAndroid/_latestVersion)
+[![JCenter](https://img.shields.io/badge/jCenter-1.0.0-green.svg)](https://bintray.com/ayvytr/maven/Logger/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache--2.0%20-blue.svg)](license)
 
 
