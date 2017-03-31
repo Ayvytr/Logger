@@ -1,5 +1,6 @@
 <img align="right" src='https://github.com/ayvytr/logger/blob/master/photos/logger/logger-logo.png' width='128' height='128'/>
 
+<span id = "jump"></span>
 
 [![GitHub release](https://img.shields.io/github/release/Ayvytr/Logger.svg)](https://github.com/Ayvytr/Logger/releases)
 [![](https://jitpack.io/v/Ayvytr/Logger.svg)](https://jitpack.io/#Ayvytr/Logger)
@@ -8,7 +9,7 @@
 
 
 # Logger
-### Simple, pretty and powerful logger for android（简单，漂亮，强大的Android日志工具）
+## Simple, pretty and powerful logger for android（简单，漂亮，强大的Android日志工具）
 
 ## 提供了：
 	- 线程信息
@@ -36,11 +37,13 @@
 		}
 ### Step 2. Add the dependency
 	dependencies {
-		        compile 'com.github.Ayvytr:Logger:1.0.0'
+		        compile 'com.github.Ayvytr:Logger:1.1.0'
 		}
 
 
-### Logger
+> ### JCenter-1.0.0和 JitPack-1.1.0是同一个版本。不同的原因是JitPack小状况
+
+## 使用
 
 
 #### 多参数使用
@@ -224,3 +227,9 @@ settings.logAdapter(new CustomLogAdapter())
 ![](photos/logger/wrap-closed.png)
 
 - Release使用LogLevel.NONE不输出任何日志
+
+
+### 感谢这位大神的库
+[logger](https://github.com/orhanobut/logger)
+
+### [动动你发财的小手，点个Star吧！](#head)
