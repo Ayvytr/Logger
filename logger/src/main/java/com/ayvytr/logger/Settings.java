@@ -32,8 +32,10 @@ public final class Settings
     //是否显示底部Border，默认不显示
     private boolean showBottomLogBorder;
     private LogAdapter logAdapter;
+    //是否在每一条Logger开头加上 ClassName.method() 这样的被调用信息
+    private boolean showCalledInfo;
 
-    /**
+     /**
      * Determines to how logs will be printed
      */
     private LogLevel logLevel = LogLevel.FULL;
@@ -43,6 +45,12 @@ public final class Settings
     public Settings hideThreadInfo()
     {
         showThreadInfo = false;
+        return this;
+    }
+
+    public Settings showThreadInfo(boolean isShow)
+    {
+        this.showThreadInfo = isShow;
         return this;
     }
 
@@ -109,6 +117,8 @@ public final class Settings
         methodOffset = 0;
         showThreadInfo = true;
         logLevel = LogLevel.FULL;
+        showBottomLogBorder = false;
+        showCalledInfo = false;
     }
 
     public boolean isShowBottomLogBorder()
@@ -148,4 +158,15 @@ public final class Settings
     {
         return justShowMessage;
     }
+
+    public boolean isShowCalledInfo()
+    {
+        return showCalledInfo;
+    }
+
+    public void showCalledInfo(boolean startsWithMethodInfo)
+    {
+        this.showCalledInfo = startsWithMethodInfo;
+    }
+
 }

@@ -4,7 +4,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/Ayvytr/Logger.svg)](https://github.com/Ayvytr/Logger/releases)
 [![](https://jitpack.io/v/Ayvytr/Logger.svg)](https://jitpack.io/#Ayvytr/Logger)
-[![JCenter](https://img.shields.io/badge/jCenter-1.0.0-green.svg)](https://bintray.com/ayvytr/maven/Logger/_latestVersion)
+[![JCenter](https://img.shields.io/badge/jCenter-1.1.0-green.svg)](https://bintray.com/ayvytr/maven/Logger/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache--2.0%20-blue.svg)](license)
 
 
@@ -23,7 +23,7 @@
 
 ## JCenter
 
-	compile 'com.ayvytr:logger:1.0.0'
+	compile 'com.ayvytr:logger:1.1.0'
 
 ## JitPack
 
@@ -204,7 +204,22 @@ L.getSettings().justShowMessage(true);
 L.d();
 L.w();   
 ```
+
 ![](photos/logger/log11.png)
+
+
+#### 我想在有参的时候也显示被调用信息
+
+```java
+L.getSettings().showCalledInfo(true);
+```
+```java
+L.d();
+L.w();   
+```
+
+![](photos/logger/log12.png)
+
 
 #### 我要屏蔽日志（试试看能不能打印出来？）
 ```java

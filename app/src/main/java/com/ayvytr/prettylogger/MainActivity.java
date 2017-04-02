@@ -31,7 +31,22 @@ public class MainActivity extends AppCompatActivity
 //        log5();
 //        log6();
 //        log7();
-        log8();
+//        log8();
+//        logWtf();
+        logShowCalledInfo();
+    }
+
+    private void logShowCalledInfo()
+    {
+        L.getSettings().showCalledInfo(true);
+        L.wtf();
+        L.wtf("AA");
+    }
+
+    private void logWtf()
+    {
+        L.getSettings().justShowMessage(true).tag("logger");
+        L.wtf();
     }
 
     private void log8()

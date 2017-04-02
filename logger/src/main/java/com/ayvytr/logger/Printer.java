@@ -92,11 +92,11 @@ final class Printer implements IPrinter
 
     private long lastTimeMillis;
 
-    /**
-     * Localize single tag and method count for each thread
-     */
-    private final ThreadLocal<String> localTag = new ThreadLocal<String>();
-    private final ThreadLocal<Integer> localMethodCount = new ThreadLocal<Integer>();
+//    /**
+//     * Localize single tag and method count for each thread
+//     */
+//    private final ThreadLocal<String> localTag = new ThreadLocal<String>();
+//    private final ThreadLocal<Integer> localMethodCount = new ThreadLocal<Integer>();
 
     /**
      * It is used to determine log settings such as method count, thread info visibility
@@ -120,21 +120,6 @@ final class Printer implements IPrinter
     {
         log(DEBUG, null, message, args);
     }
-
-//    @Override
-//    public void d(Object object)
-//    {
-//        String message;
-//        if(object.getClass().isArray())
-//        {
-//            message = Arrays.deepToString((Object[]) object);
-//        }
-//        else
-//        {
-//            message = object.toString();
-//        }
-//        log(DEBUG, null, message);
-//    }
 
     @Override
     public void e(String message, Object... args)
@@ -376,7 +361,7 @@ final class Printer implements IPrinter
     @Override
     public void v()
     {
-        prettyLog(VERBOSE, getTag(), createMessage());
+        prettyLog(VERBOSE, getTag(), getNoArgsMessage());
     }
 
     /**
@@ -384,7 +369,7 @@ final class Printer implements IPrinter
      *
      * @return message
      */
-    private String createMessage()
+    private String getNoArgsMessage()
     {
         StackTraceElement[] trace = Thread.currentThread().getStackTrace();
         int stackOffset = getStackOffset(trace) + settings.getMethodOffset();
@@ -397,31 +382,31 @@ final class Printer implements IPrinter
     @Override
     public void d()
     {
-        prettyLog(DEBUG, getTag(), createMessage());
+        prettyLog(DEBUG, getTag(), getNoArgsMessage());
     }
 
     @Override
     public void i()
     {
-        prettyLog(INFO, getTag(), createMessage());
+        prettyLog(INFO, getTag(), getNoArgsMessage());
     }
 
     @Override
     public void w()
     {
-        prettyLog(WARN, getTag(), createMessage());
+        prettyLog(WARN, getTag(), getNoArgsMessage());
     }
 
     @Override
     public void e()
     {
-        prettyLog(ERROR, getTag(), createMessage());
+        prettyLog(ERROR, getTag(), getNoArgsMessage());
     }
 
     @Override
     public void wtf()
     {
-        prettyLog(ASSERT, getTag(), createMessage());
+        prettyLog(ASSERT, getTag(), getNoArgsMessage());
     }
 
     private void objectsLog(@Priority int priority, Object... objects)
@@ -476,7 +461,7 @@ final class Printer implements IPrinter
             return;
         }
         String tag = getTag();
-        String message = createMessage(msg, args);
+        String message = getMessage(msg, args);
         log(priority, tag, message, throwable);
     }
 
@@ -565,23 +550,17 @@ final class Printer implements IPrinter
      */
     private String getTag()
     {
-        String tag = localTag.get();
-        if(tag != null)
-        {
-            localTag.remove();
-            return tag;
-        }
         return settings.getTag();
     }
 
-    private String createMessage(String message, Object... args)
+    private String getMessage(String message, Object... args)
     {
-        if(args == null || args.length == 0)
+        StringBuffer msgBuffer = new StringBuffer(message + "  ");
+        if(settings.isShowCalledInfo())
         {
-            return message;
+            msgBuffer.insert(0, getNoArgsMessage() + "  ");
         }
 
-        StringBuffer msgBuffer = new StringBuffer(message + "  ");
         for(Object arg : args)
         {
             msgBuffer.append(arg);
@@ -593,18 +572,7 @@ final class Printer implements IPrinter
 
     private int getMethodCount()
     {
-        Integer count = localMethodCount.get();
-        int result = settings.getMethodCount();
-        if(count != null)
-        {
-            localMethodCount.remove();
-            result = count;
-        }
-        if(result < 0)
-        {
-            throw new IllegalStateException("methodCount cannot be negative");
-        }
-        return result;
+        return settings.getMethodCount();
     }
 
     /**
