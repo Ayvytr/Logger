@@ -23,23 +23,26 @@
 package com.ayvytr.logger;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 public final class Settings
 {
-    private int methodCount = 2;
+    static final String DEFAULT_TAG = "PRETTYLOGGER";
+
+    private int methodCount = 1;
     private boolean showThreadInfo = true;
     private int methodOffset = 0;
     //是否显示底部Border，默认不显示
     private boolean showBottomLogBorder;
     private LogAdapter logAdapter;
     //是否在每一条Logger开头加上 ClassName.method() 这样的被调用信息
-    private boolean showCalledInfo;
+    private boolean showMethodCallInfo;
 
-     /**
+    /**
      * Determines to how logs will be printed
      */
-    private LogLevel logLevel = LogLevel.FULL;
-    private String tag = L.DEFAULT_TAG;
+    private boolean showLog = true;
+    private String tag = DEFAULT_TAG;
     private boolean justShowMessage;
 
     public Settings hideThreadInfo()
@@ -64,9 +67,9 @@ public final class Settings
         return this;
     }
 
-    public Settings logLevel(LogLevel logLevel)
+    public Settings logLevel(boolean showLog)
     {
-        this.logLevel = logLevel;
+        this.showLog = showLog;
         return this;
     }
 
@@ -86,9 +89,9 @@ public final class Settings
         return showThreadInfo;
     }
 
-    public LogLevel getLogLevel()
+    public boolean isShowLog()
     {
-        return logLevel;
+        return showLog;
     }
 
     public int getMethodOffset()
@@ -116,9 +119,9 @@ public final class Settings
         methodCount = 2;
         methodOffset = 0;
         showThreadInfo = true;
-        logLevel = LogLevel.FULL;
+        showLog = true;
         showBottomLogBorder = false;
-        showCalledInfo = false;
+        showMethodCallInfo = false;
     }
 
     public boolean isShowBottomLogBorder()
@@ -134,12 +137,10 @@ public final class Settings
 
     public Settings tag(@NonNull String tag)
     {
-        if(tag == null)
+        if(!TextUtils.isEmpty(tag))
         {
-            throw new NullPointerException();
+            this.tag = tag;
         }
-
-        this.tag = tag;
         return this;
     }
 
@@ -159,14 +160,18 @@ public final class Settings
         return justShowMessage;
     }
 
-    public boolean isShowCalledInfo()
+    public boolean isShowMethodCallInfo()
     {
-        return showCalledInfo;
+        return showMethodCallInfo;
     }
 
     public void showCalledInfo(boolean startsWithMethodInfo)
     {
-        this.showCalledInfo = startsWithMethodInfo;
+        this.showMethodCallInfo = startsWithMethodInfo;
     }
 
+    public void showLog(boolean showLog)
+    {
+        this.showLog = showLog;
+    }
 }

@@ -30,90 +30,13 @@ package com.ayvytr.logger;
  */
 public final class L
 {
-    static final String DEFAULT_TAG = "PRETTYLOGGER";
-
     private static Settings settings = new Settings();
     private static Printer printer = new Printer(settings);
 
     private L()
     {
-        throw new UnsupportedInitializationException();
+        throw new UnsupportedOperationException();
     }
-
-    public static IPrinter t(String tag)
-    {
-        return printer.t(tag);
-    }
-    /**
-     * It is used to get the settings object in order to change settings
-     *
-     * @return the settings object
-     */
-    public static Settings getSettings()
-    {
-        return settings;
-    }
-
-    public static void d(String message, Object... args)
-    {
-        printer.d(message, args);
-    }
-
-    public static void d(Object object)
-    {
-        printer.d(object);
-    }
-
-    public static void e(String message, Object... args)
-    {
-        printer.e(null, message, args);
-    }
-
-    public static void e(Throwable throwable, String message, Object... args)
-    {
-        printer.e(throwable, message, args);
-    }
-
-    public static void i(String message, Object... args)
-    {
-        printer.i(message, args);
-    }
-
-    public static void v(String message, Object... args)
-    {
-        printer.v(message, args);
-    }
-
-    public static void w(String message, Object... args)
-    {
-        printer.w(message, args);
-    }
-
-    public static void wtf(String message, Object... args)
-    {
-        printer.wtf(message, args);
-    }
-
-    /**
-     * Formats the json content and print it
-     *
-     * @param json the json content
-     */
-    public static void json(String json)
-    {
-        printer.json(json);
-    }
-
-    /**
-     * Formats the json content and print it
-     *
-     * @param xml the xml content
-     */
-    public static void xml(String xml)
-    {
-        printer.xml(xml);
-    }
-
 
     public static void v(Object... objects)
     {
@@ -145,33 +68,34 @@ public final class L
         printer.wtf(objects);
     }
 
-    public static void v()
+    /**
+     * It is used to get the settings object in order to change settings
+     *
+     * @return the settings object
+     */
+    public static Settings settings()
     {
-        printer.v();
+        return settings;
     }
 
-    public static void d()
+
+    /**
+     * Formats the json content and print it
+     *
+     * @param json the json content
+     */
+    public static void json(String json)
     {
-        printer.d();
+        printer.json(json);
     }
 
-    public static void i()
+    /**
+     * Formats the json content and print it
+     *
+     * @param xml the xml content
+     */
+    public static void xml(String xml)
     {
-        printer.i();
-    }
-
-    public static void w()
-    {
-        printer.w();
-    }
-
-    public static void e()
-    {
-        printer.e();
-    }
-
-    public static void wtf()
-    {
-        printer.wtf();
+        printer.xml(xml);
     }
 }

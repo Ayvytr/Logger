@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ayvytr.logger.L;
-import com.ayvytr.logger.LogLevel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,20 +37,20 @@ public class MainActivity extends AppCompatActivity
 
     private void logShowCalledInfo()
     {
-        L.getSettings().showCalledInfo(true);
+        L.settings().showCalledInfo(true);
         L.wtf();
         L.wtf("AA");
     }
 
     private void logWtf()
     {
-        L.getSettings().justShowMessage(true).tag("logger");
+        L.settings().justShowMessage(true).tag("logger");
         L.wtf();
     }
 
     private void log8()
     {
-        L.getSettings().logLevel(LogLevel.NONE);
+        L.settings().showLog(true);
         L.e();
         L.e("ia");
         L.e(1);
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 
     private void log7()
     {
-        L.getSettings().justShowMessage(true);
+        L.settings().justShowMessage(true);
         L.i();
         L.w();
         L.wtf();
@@ -69,44 +68,44 @@ public class MainActivity extends AppCompatActivity
 
     private void log6()
     {
-        L.getSettings().justShowMessage(true);
+        L.settings().justShowMessage(true);
         L.w("aa");
         L.w("aa", 1);
     }
 
     private void log5()
     {
-        L.getSettings().showBottomBorder(true);
+        L.settings().showBottomBorder(true);
         L.e("Msg");
         L.w("Msg");
     }
 
     private void log4()
     {
-        L.getSettings().methodCount(0).showBottomBorder(true);
+        L.settings().methodCount(0).showBottomBorder(true);
         L.w(1, "aA");
     }
 
     private void log3()
     {
-        L.getSettings().methodCount(10).showBottomBorder(true).methodOffset(5);
+        L.settings().methodCount(10).showBottomBorder(true).methodOffset(5);
         L.e();
     }
 
     private void log2()
     {
 //        L.t("MyTag").e(1);
-//        L.getSettings().tag("MyTag");
-        L.getSettings().hideThreadInfo();
+//        L.settings().tag("MyTag");
+        L.settings().hideThreadInfo();
         L.e(1, 2);
     }
 
     private void log()
     {
-        //        L.getSettings().showBottomBorder(true);
-//        L.getSettings().tag("mytag");
-//        L.getSettings().tag("mytag").justShowMessage(true);
-//        L.getSettings().tag("mytag").methodCount(55).showBottomBorder(true);
+        //        L.settings().showBottomBorder(true);
+//        L.settings().tag("mytag");
+//        L.settings().tag("mytag").justShowMessage(true);
+//        L.settings().tag("mytag").methodCount(55).showBottomBorder(true);
 //        L.e("MyLog");
 //        L.w("Message");
 //
