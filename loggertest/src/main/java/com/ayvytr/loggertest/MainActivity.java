@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.ayvytr.logger.L;
-import com.ayvytr.logger.LogLevel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity
 
     private void log8()
     {
-        L.settings().logLevel(LogLevel.FULL);
+        L.settings().showLog(true);
         L.e();
         L.e("ia");
         L.e(1);
