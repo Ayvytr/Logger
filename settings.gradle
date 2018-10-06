@@ -1,2 +1,1 @@
-include ':app', ':logger', ':loggertest'
-//include ':app', ':deprecatedlogger', ':logger', ':loggertest'
+include ':app', ':logger'

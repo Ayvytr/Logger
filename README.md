@@ -190,18 +190,6 @@ L.w();
 ![](photos/logger/log11.png)
 
 
-#### 我想在有参的时候也显示被调用信息
-
-```java
-L.settings().showCalledInfo(true);
-```
-```java
-L.d();
-L.w();   
-```
-
-![](photos/logger/log12.png)
-
 
 #### 我要屏蔽日志（试试看能不能打印出来？）
 ```java

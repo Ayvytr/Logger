@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity
 
     private void logShowCalledInfo()
     {
-        L.settings().showCalledInfo(true);
         L.wtf();
         L.wtf("AA");
     }
