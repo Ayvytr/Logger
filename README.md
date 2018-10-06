@@ -145,7 +145,7 @@ L
   .hideThreadInfo()               // 隐藏线程信息（默认显示）
   .logLevel(LogLevel.NONE)        // 默认 LogLevel.FULL
   .methodOffset(2)                // default 0
-  .logAdapter(new AndroidLogAdapter()); //default AndroidLogAdapter
+  .ILog(new AndroidLogAdapter()); //default AndroidLogAdapter
 }
 
 ```
@@ -229,7 +229,7 @@ L.getSettings().logLevel(LogLevel.NONE);
 ### 替代我的LogAdapter
 ```java
 class CustomLogAdapter Implement LogAdapter {}
-settings.logAdapter(new CustomLogAdapter())
+settings.ILog(new CustomLogAdapter())
 ```
 
 ### Notes

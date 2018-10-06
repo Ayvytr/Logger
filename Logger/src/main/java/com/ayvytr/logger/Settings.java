@@ -1,45 +1,32 @@
-/*
- * Copyright 2016 Ayvytr
- * From: github:orhanobut/logger
- * ________________________________________________________________________
- *
- * Copyright 2015 Orhan Obut
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * This software contains code derived from the following Android classes:
- * android.util.Log, android.text.TextUtils.
- */
 package com.ayvytr.logger;
 
-import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+/**
+ * Log设置类
+ *
+ * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
+ * @since 1.0.0
+ */
 public final class Settings
 {
-    private int methodCount = 2;
+    static final String DEFAULT_TAG = "PRETTYLOGGER";
+
+    private int methodCount = 1;
     private boolean showThreadInfo = true;
     private int methodOffset = 0;
     //是否显示底部Border，默认不显示
     private boolean showBottomLogBorder;
-    private LogAdapter logAdapter;
+    private ILog ILog;
     //是否在每一条Logger开头加上 ClassName.method() 这样的被调用信息
-    private boolean showCalledInfo;
+    private boolean showMethodCallInfo;
 
-     /**
-     * Determines to how logs will be printed
+    /**
+     * show log or not
      */
-    private LogLevel logLevel = LogLevel.FULL;
-    private String tag = L.DEFAULT_TAG;
+    private boolean showLog = true;
+
+    private String tag = DEFAULT_TAG;
     private boolean justShowMessage;
 
     public Settings hideThreadInfo()
@@ -64,12 +51,6 @@ public final class Settings
         return this;
     }
 
-    public Settings logLevel(LogLevel logLevel)
-    {
-        this.logLevel = logLevel;
-        return this;
-    }
-
     public Settings methodOffset(int offset)
     {
         this.methodOffset = offset;
@@ -86,9 +67,9 @@ public final class Settings
         return showThreadInfo;
     }
 
-    public LogLevel getLogLevel()
+    public boolean isShowLog()
     {
-        return logLevel;
+        return showLog;
     }
 
     public int getMethodOffset()
@@ -96,19 +77,19 @@ public final class Settings
         return methodOffset;
     }
 
-    public Settings logAdapter(LogAdapter logAdapter)
+    public Settings logAdapter(ILog ILog)
     {
-        this.logAdapter = logAdapter;
+        this.ILog = ILog;
         return this;
     }
 
-    public LogAdapter getLogAdapter()
+    public ILog getILog()
     {
-        if(logAdapter == null)
+        if(ILog == null)
         {
-            logAdapter = new AndroidLogAdapter();
+            ILog = new AndroidLogAdapter();
         }
-        return logAdapter;
+        return ILog;
     }
 
     public void reset()
@@ -116,9 +97,9 @@ public final class Settings
         methodCount = 2;
         methodOffset = 0;
         showThreadInfo = true;
-        logLevel = LogLevel.FULL;
+        showLog = true;
         showBottomLogBorder = false;
-        showCalledInfo = false;
+        showMethodCallInfo = false;
     }
 
     public boolean isShowBottomLogBorder()
@@ -132,14 +113,12 @@ public final class Settings
         return this;
     }
 
-    public Settings tag(@NonNull String tag)
+    public Settings tag(String tag)
     {
-        if(tag == null)
+        if(!TextUtils.isEmpty(tag))
         {
-            throw new NullPointerException();
+            this.tag = tag;
         }
-
-        this.tag = tag;
         return this;
     }
 
@@ -159,14 +138,18 @@ public final class Settings
         return justShowMessage;
     }
 
-    public boolean isShowCalledInfo()
+    public boolean isShowMethodCallInfo()
     {
-        return showCalledInfo;
+        return showMethodCallInfo;
     }
 
     public void showCalledInfo(boolean startsWithMethodInfo)
     {
-        this.showCalledInfo = startsWithMethodInfo;
+        this.showMethodCallInfo = startsWithMethodInfo;
     }
 
+    public void showLog(boolean showLog)
+    {
+        this.showLog = showLog;
+    }
 }
