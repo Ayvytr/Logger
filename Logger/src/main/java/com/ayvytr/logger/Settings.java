@@ -13,13 +13,11 @@ public final class Settings
     static final String DEFAULT_TAG = "PRETTYLOGGER";
 
     private int methodCount = 1;
-    private boolean showThreadInfo = true;
+    private boolean showThreadInfo = false;
     private int methodOffset = 0;
     //是否显示底部Border，默认不显示
     private boolean showBottomLogBorder;
     private LogAdapter LogAdapter;
-    //是否在每一条Logger开头加上 ClassName.method() 这样的被调用信息
-    private boolean showMethodCallInfo;
 
     /**
      * show log or not
@@ -94,12 +92,11 @@ public final class Settings
 
     public void reset()
     {
-        methodCount = 2;
+        methodCount = 1;
         methodOffset = 0;
-        showThreadInfo = true;
+        showThreadInfo = false;
         showLog = true;
         showBottomLogBorder = false;
-        showMethodCallInfo = false;
     }
 
     public boolean isShowBottomLogBorder()
@@ -136,16 +133,6 @@ public final class Settings
     public boolean isJustShowMessage()
     {
         return justShowMessage;
-    }
-
-    public boolean isShowMethodCallInfo()
-    {
-        return showMethodCallInfo;
-    }
-
-    public void showCalledInfo(boolean startsWithMethodInfo)
-    {
-        this.showMethodCallInfo = startsWithMethodInfo;
     }
 
     public void showLog(boolean showLog)
