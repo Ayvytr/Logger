@@ -19,7 +19,10 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 /**
- * @author admin
+ * Log打印实现类
+ *
+ * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
+ * @since 1.0.0
  */
 public class Printer implements IPrinter
 {
@@ -309,23 +312,23 @@ public class Printer implements IPrinter
         switch(priority)
         {
             case Log.ERROR:
-                settings.getLogAdapter().e(tag, chunk);
+                settings.getILog().e(tag, chunk);
                 break;
             case Log.INFO:
-                settings.getLogAdapter().i(tag, chunk);
+                settings.getILog().i(tag, chunk);
                 break;
             case Log.WARN:
-                settings.getLogAdapter().w(tag, chunk);
+                settings.getILog().w(tag, chunk);
                 break;
             case Log.ASSERT:
-                settings.getLogAdapter().wtf(tag, chunk);
+                settings.getILog().wtf(tag, chunk);
                 break;
             case Log.DEBUG:
-                settings.getLogAdapter().d(tag, chunk);
+                settings.getILog().d(tag, chunk);
                 break;
             //默认为VERBOSE
             default:
-                settings.getLogAdapter().v(tag, chunk);
+                settings.getILog().v(tag, chunk);
                 break;
         }
     }

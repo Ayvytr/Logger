@@ -1,30 +1,13 @@
-/*
- * Copyright 2016 Ayvytr
- * From: github:orhanobut/logger
- * ________________________________________________________________________
- *
- * Copyright 2015 Orhan Obut
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * This software contains code derived from the following Android classes:
- * android.util.Log, android.text.TextUtils.
- */
 package com.ayvytr.logger;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+/**
+ * Log设置类
+ *
+ * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
+ * @since 1.0.0
+ */
 public final class Settings
 {
     static final String DEFAULT_TAG = "PRETTYLOGGER";
@@ -34,14 +17,15 @@ public final class Settings
     private int methodOffset = 0;
     //是否显示底部Border，默认不显示
     private boolean showBottomLogBorder;
-    private LogAdapter logAdapter;
+    private ILog ILog;
     //是否在每一条Logger开头加上 ClassName.method() 这样的被调用信息
     private boolean showMethodCallInfo;
 
     /**
-     * Determines to how logs will be printed
+     * show log or not
      */
     private boolean showLog = true;
+
     private String tag = DEFAULT_TAG;
     private boolean justShowMessage;
 
@@ -64,12 +48,6 @@ public final class Settings
             methodCount = 0;
         }
         this.methodCount = methodCount;
-        return this;
-    }
-
-    public Settings logLevel(boolean showLog)
-    {
-        this.showLog = showLog;
         return this;
     }
 
@@ -99,19 +77,19 @@ public final class Settings
         return methodOffset;
     }
 
-    public Settings logAdapter(LogAdapter logAdapter)
+    public Settings logAdapter(ILog ILog)
     {
-        this.logAdapter = logAdapter;
+        this.ILog = ILog;
         return this;
     }
 
-    public LogAdapter getLogAdapter()
+    public ILog getILog()
     {
-        if(logAdapter == null)
+        if(ILog == null)
         {
-            logAdapter = new AndroidLogAdapter();
+            ILog = new AndroidLogAdapter();
         }
-        return logAdapter;
+        return ILog;
     }
 
     public void reset()
@@ -135,7 +113,7 @@ public final class Settings
         return this;
     }
 
-    public Settings tag(@NonNull String tag)
+    public Settings tag(String tag)
     {
         if(!TextUtils.isEmpty(tag))
         {
