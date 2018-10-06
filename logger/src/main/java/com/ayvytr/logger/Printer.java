@@ -143,29 +143,14 @@ public class Printer implements IPrinter
         return -1;
     }
 
-    /**
-     * return message for no argument Logcat
-     *
-     * @return message
-     */
-    private String getMethodCallInfo()
-    {
-        StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-        int stackOffset = getStackOffset(trace) + settings.getMethodOffset();
-        int stackIndex = 1 + stackOffset;
-
-        return getSimpleClassName(trace[stackIndex].getClassName()) + "." + trace[stackIndex]
-                .getMethodName() + "()";
-    }
-
     private String buildMessage(Object... args)
     {
-        StringBuffer msgBuffer = new StringBuffer();
-        if(settings.isShowMethodCallInfo())
+        if(args.length == 0)
         {
-            msgBuffer.append(getMethodCallInfo() + "  ");
+            return "[Empty Log]";
         }
 
+        StringBuffer msgBuffer = new StringBuffer();
         for(Object arg : args)
         {
             msgBuffer.append(arg);
