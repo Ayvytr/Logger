@@ -123,7 +123,6 @@ public class Printer implements IPrinter
         return name.substring(lastIndex + 1);
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     /**
      * Determines the starting index of the stack trace, after method calls made by this class.
      *
@@ -144,7 +143,6 @@ public class Printer implements IPrinter
         return -1;
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     /**
      * return message for no argument Logcat
      *
@@ -160,7 +158,6 @@ public class Printer implements IPrinter
                 .getMethodName() + "()";
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private String buildMessage(Object... args)
     {
         StringBuffer msgBuffer = new StringBuffer();
@@ -178,7 +175,6 @@ public class Printer implements IPrinter
         return msgBuffer.toString();
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private void disposeLog(int priority, Object... objects)
     {
         if(!settings.isShowLog())
@@ -204,7 +200,6 @@ public class Printer implements IPrinter
         }
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private String getThreadInfo()
     {
         if(settings.isShowThreadInfo())
@@ -217,13 +212,11 @@ public class Printer implements IPrinter
         }
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private void logDivider(int logType)
     {
         logChunk(logType, MIDDLE_BORDER);
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private void logMethodCountInfo(int priority, int methodCount)
     {
         if(methodCount <= 0)
@@ -264,14 +257,12 @@ public class Printer implements IPrinter
         }
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private void logTopBorder(int logType)
     {
         logChunk(logType, settings.isShowBottomLogBorder() ? TOP_BORDER :
                 needConnectBorder() ? TOP_CONNECT_BORDER : TOP_BORDER);
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private boolean needConnectBorder()
     {
         long timeMillis = System.currentTimeMillis();
@@ -280,13 +271,11 @@ public class Printer implements IPrinter
         return need;
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private void logBottomBorder(int logType)
     {
         logChunk(logType, BOTTOM_BORDER);
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private void log(int priority, String message)
     {
         byte[] bytes = message.getBytes();
@@ -305,30 +294,29 @@ public class Printer implements IPrinter
         }
     }
 
-    @SuppressWarnings("StringBufferReplaceableByString")
     private synchronized void logChunk(int priority, String chunk)
     {
         String tag = getTag();
         switch(priority)
         {
             case Log.ERROR:
-                settings.getILog().e(tag, chunk);
+                settings.getLogAdapter().e(tag, chunk);
                 break;
             case Log.INFO:
-                settings.getILog().i(tag, chunk);
+                settings.getLogAdapter().i(tag, chunk);
                 break;
             case Log.WARN:
-                settings.getILog().w(tag, chunk);
+                settings.getLogAdapter().w(tag, chunk);
                 break;
             case Log.ASSERT:
-                settings.getILog().wtf(tag, chunk);
+                settings.getLogAdapter().wtf(tag, chunk);
                 break;
             case Log.DEBUG:
-                settings.getILog().d(tag, chunk);
+                settings.getLogAdapter().d(tag, chunk);
                 break;
             //默认为VERBOSE
             default:
-                settings.getILog().v(tag, chunk);
+                settings.getLogAdapter().v(tag, chunk);
                 break;
         }
     }

@@ -3,8 +3,7 @@
 <span id = "jump"></span>
 
 [![GitHub release](https://img.shields.io/github/release/Ayvytr/Logger.svg)](https://github.com/Ayvytr/Logger/releases)
-[![](https://jitpack.io/v/Ayvytr/Logger.svg)](https://jitpack.io/#Ayvytr/Logger)
-[![JCenter](https://img.shields.io/badge/jCenter-1.1.0-green.svg)](https://bintray.com/ayvytr/maven/Logger/_latestVersion)
+[![JCenter](https://img.shields.io/badge/jCenter-2.1.0-green.svg)](https://bintray.com/ayvytr/maven/Logger/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache--2.0%20-blue.svg)](license)
 
 
@@ -23,25 +22,8 @@
 
 ## JCenter
 
-	compile 'com.ayvytr:logger:1.1.0'
+	compile 'com.ayvytr:logger:2.1.0'
 
-## JitPack
-
-### Step 1. Add the JitPack repository to your build file
-#### Add it in your root build.gradle at the end of repositories:
-	allprojects {
-			repositories {
-				...
-				maven { url "https://jitpack.io" }
-			}
-		}
-### Step 2. Add the dependency
-	dependencies {
-		        compile 'com.github.Ayvytr:Logger:1.1.0'
-		}
-
-
-> ### JCenter-1.0.0和 JitPack-1.1.0是同一个版本。不同的原因是JitPack小状况
 
 ## 使用
 
@@ -88,13 +70,13 @@ L.t("MyTag").e(1);
 
 > ##### 直接设置
 ```java
-L.getSettings().tag("MyTag");
+L.settings().tag("MyTag");
 ```
 
 #### 更改输出的方法数量 (聪明的你是不是发现了什么？)
 
 ```java
-L.getSettings().methodCount(10);
+L.settings().methodCount(10);
 L.t(1).d("hello");
 ```
 
@@ -103,21 +85,21 @@ L.t(1).d("hello");
 #### 更改方法栈偏移(方法调用信息将会前移数量，和前边一张图片比较一下)
 
 ```java
-L.getSettings().methodOffset(10);
+L.settings().methodOffset(10);
 ```
 
 ![](photos/logger/log6.png)
 
 #### 隐藏线程信息
 ```java
-L.getSettings().hideThreadInfo();
+L.settings().hideThreadInfo();
 ```
 
 ![](photos/logger/log7.png)
 
 #### 不想显示方法调用信息
 ```java
-L.getSettings().methodCount(0);
+L.settings().methodCount(0);
 ```
 
 ![](photos/logger/log8.png)
@@ -135,17 +117,17 @@ L.json(YOUR_JSON_DATA);
 L.e(exception,"message");
 ```
 
-### 设置（入口：L.getSettings())
+### 设置（入口：L.settings())
 
 ```java
 L
-  .getSettings()                  // 获取Settings
+  .settings()                  // 获取Settings
   .tag(YOUR_TAG)                  // 默认tag： PRETTYLOGGER
   .methodCount(3)                 // 默认为 2
   .hideThreadInfo()               // 隐藏线程信息（默认显示）
   .logLevel(LogLevel.NONE)        // 默认 LogLevel.FULL
   .methodOffset(2)                // default 0
-  .ILog(new AndroidLogAdapter()); //default AndroidLogAdapter
+  .LogAdapter(new AndroidLogAdapter()); //default AndroidLogAdapter
 }
 
 ```
@@ -171,7 +153,7 @@ L.log(DEBUG, "tag", "message", throwable);
 
 #### 我要每个日志都单独被框住
 ```java
-L.getSettings().showBottomBorder(true);
+L.settings().showBottomBorder(true);
 ```
 ```java
 L.d("hello");
@@ -186,7 +168,7 @@ L.d("hello", "world", 5);
 
 #### 我只想要我日志内容，不要框子
 ```java
-L.getSettings().justShowMessage(true);
+L.settings().justShowMessage(true);
 ```
 ```java
 L.d("hello");
@@ -198,7 +180,7 @@ L.d("hello", "world", 5);
 #### 我只想用，参数都不想填一个（我会帮你打印类和方法名）
 
 ```java
-L.getSettings().justShowMessage(true);
+L.settings().justShowMessage(true);
 ```
 ```java
 L.d();
@@ -211,7 +193,7 @@ L.w();
 #### 我想在有参的时候也显示被调用信息
 
 ```java
-L.getSettings().showCalledInfo(true);
+L.settings().showCalledInfo(true);
 ```
 ```java
 L.d();
@@ -223,13 +205,13 @@ L.w();
 
 #### 我要屏蔽日志（试试看能不能打印出来？）
 ```java
-L.getSettings().logLevel(LogLevel.NONE);
+L.settings().showLog(false);
 ```
 
 ### 替代我的LogAdapter
 ```java
-class CustomLogAdapter Implement LogAdapter {}
-settings.ILog(new CustomLogAdapter())
+class CustomLogAdapter Implement LogAdapter{}
+settings.LogAdapter(new CustomLogAdapter())
 ```
 
 ### Notes
@@ -243,8 +225,5 @@ settings.ILog(new CustomLogAdapter())
 
 - Release使用LogLevel.NONE不输出任何日志
 
-
-### 感谢这位大神的库
-[logger](https://github.com/orhanobut/logger)
 
 ### [动动你发财的小手，点个Star吧！](#head)

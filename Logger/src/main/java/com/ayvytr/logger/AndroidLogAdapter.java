@@ -9,7 +9,7 @@ import android.util.Log;
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
  */
-public final class AndroidLogAdapter implements ILog
+public final class AndroidLogAdapter implements LogAdapter
 {
     @Override
     public void d(String tag, String message)

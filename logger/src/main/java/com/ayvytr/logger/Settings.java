@@ -17,7 +17,7 @@ public final class Settings
     private int methodOffset = 0;
     //是否显示底部Border，默认不显示
     private boolean showBottomLogBorder;
-    private ILog ILog;
+    private LogAdapter LogAdapter;
     //是否在每一条Logger开头加上 ClassName.method() 这样的被调用信息
     private boolean showMethodCallInfo;
 
@@ -77,19 +77,19 @@ public final class Settings
         return methodOffset;
     }
 
-    public Settings logAdapter(ILog ILog)
+    public Settings logAdapter(LogAdapter LogAdapter)
     {
-        this.ILog = ILog;
+        this.LogAdapter = LogAdapter;
         return this;
     }
 
-    public ILog getILog()
+    public LogAdapter getLogAdapter()
     {
-        if(ILog == null)
+        if(LogAdapter == null)
         {
-            ILog = new AndroidLogAdapter();
+            LogAdapter = new AndroidLogAdapter();
         }
-        return ILog;
+        return LogAdapter;
     }
 
     public void reset()
