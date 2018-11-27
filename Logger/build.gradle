@@ -1,17 +1,7 @@
-def isLib = true
-//def isLib = false
-if(isLib) {
-    apply plugin: 'com.android.library'
-}
-else{
-    apply plugin: 'com.android.application'
-}
-
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
-
-
 
     defaultConfig {
         minSdkVersion 1
@@ -41,4 +31,4 @@ dependencies {
 //    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
-apply from: '../upload.gradle'
+apply from: 'https://raw.github.com/Ayvytr/KotlinJavadocMavenPush/master/maven_push.gradle'
