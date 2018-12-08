@@ -3,7 +3,7 @@
 <span id = "jump"></span>
 
 [![GitHub release](https://img.shields.io/github/release/Ayvytr/Logger.svg)](https://github.com/Ayvytr/Logger/releases)
-[![JCenter](https://img.shields.io/badge/jCenter-3.1.0-green.svg)](https://bintray.com/ayvytr/maven/Logger/_latestVersion)
+[![JCenter](https://img.shields.io/badge/jCenter-3.2.0-green.svg)](https://bintray.com/ayvytr/maven/Logger/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache--2.0%20-blue.svg)](license)
 
 
@@ -22,7 +22,7 @@
 
 ## JCenter
 
-	implementation 'com.ayvytr:logger:3.1.0'
+	implementation 'com.ayvytr:logger:3.2.0'
 
 
 ## 使用
