@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.lang.reflect.Array;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -24,8 +25,7 @@ import javax.xml.transform.stream.StreamSource;
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
  */
-public class Printer implements IPrinter
-{
+public class Printer implements IPrinter {
     /**
      * Android's max limit for a log entry is ~4076 bytes,
      * so 4000 bytes is used as chunk size since default charset
@@ -67,58 +67,49 @@ public class Printer implements IPrinter
      */
     private Settings settings;
 
-    public Printer(Settings settings)
-    {
+    public Printer(Settings settings) {
         this.settings = settings;
     }
 
     @Override
-    public void v(Object... objects)
-    {
+    public void v(Object... objects) {
         disposeLog(Log.VERBOSE, objects);
     }
 
     @Override
-    public void d(Object... objects)
-    {
+    public void d(Object... objects) {
         disposeLog(Log.DEBUG, objects);
     }
 
     @Override
-    public void i(Object... objects)
-    {
+    public void i(Object... objects) {
 
         disposeLog(Log.INFO, objects);
     }
 
     @Override
-    public void w(Object... objects)
-    {
+    public void w(Object... objects) {
         disposeLog(Log.WARN, objects);
     }
 
     @Override
-    public void e(Object... objects)
-    {
+    public void e(Object... objects) {
         disposeLog(Log.ERROR, objects);
     }
 
     @Override
-    public void wtf(Object... objects)
-    {
+    public void wtf(Object... objects) {
         disposeLog(Log.ASSERT, objects);
     }
 
     /**
      * @return the appropriate tag based on local or global
      */
-    private String getTag()
-    {
+    private String getTag() {
         return settings.getTag();
     }
 
-    private String getSimpleClassName(String name)
-    {
+    private String getSimpleClassName(String name) {
         int lastIndex = name.lastIndexOf(".");
         return name.substring(lastIndex + 1);
     }
@@ -129,83 +120,87 @@ public class Printer implements IPrinter
      * @param trace the stack trace
      * @return the stack offset
      */
-    private int getStackOffset(StackTraceElement[] trace)
-    {
-        for(int i = MIN_STACK_OFFSET; i < trace.length; i++)
-        {
+    private int getStackOffset(StackTraceElement[] trace) {
+        for(int i = MIN_STACK_OFFSET; i < trace.length; i++) {
             StackTraceElement e = trace[i];
             String name = e.getClassName();
-            if(!name.equals(Printer.class.getName()) && !name.equals(L.class.getName()))
-            {
+            if(!name.equals(Printer.class.getName()) && !name.equals(L.class.getName())) {
                 return --i;
             }
         }
         return -1;
     }
 
-    private String buildMessage(Object... args)
-    {
-        if(args.length == 0)
-        {
+    private String buildMessage(Object... args) {
+        //防止直接传入null
+        if(args == null) {
+            return "null";
+        }
+
+        if(args.length == 0) {
             return "[Empty Log]";
         }
 
         StringBuffer msgBuffer = new StringBuffer();
-        for(Object arg : args)
-        {
-            msgBuffer.append(arg);
+        for(Object arg : args) {
+            if(arg == null) {
+                //防止数组等对象为null
+                msgBuffer.append("null");
+            } else if(arg.getClass().getName().startsWith("[")) {
+                msgBuffer.append("[");
+                try {
+                    for(int i = 0; ; i++) {
+                        msgBuffer.append(Array.get(arg, i));
+                        msgBuffer.append(",");
+                    }
+                } catch(IndexOutOfBoundsException e) {
+                    if(msgBuffer.length() > 0) {
+                        msgBuffer.deleteCharAt(msgBuffer.length() - 1);
+                    }
+                }
+                msgBuffer.append("]");
+            } else {
+                msgBuffer.append(arg);
+            }
             msgBuffer.append(" ");
         }
 
         return msgBuffer.toString();
     }
 
-    private void disposeLog(int priority, Object... objects)
-    {
-        if(!settings.isShowLog())
-        {
+    private void disposeLog(int priority, Object... objects) {
+        if(!settings.isShowLog()) {
             return;
         }
 
         String message = buildMessage(objects);
-        if(settings.isJustShowMessage())
-        {
+        if(settings.isJustShowMessage()) {
             log(priority, message);
-        }
-        else
-        {
+        } else {
             logTopBorder(priority);
             log(priority, getThreadInfo() + message);
             logMethodCountInfo(priority, settings.getMethodCount());
 
-            if(settings.isShowBottomLogBorder())
-            {
+            if(settings.isShowBottomLogBorder()) {
                 logBottomBorder(priority);
             }
         }
     }
 
-    private String getThreadInfo()
-    {
-        if(settings.isShowThreadInfo())
-        {
+    private String getThreadInfo() {
+        if(settings.isShowThreadInfo()) {
             return "[\"" + Thread.currentThread().getName() + "\" Thread]: ";
-        }
-        else
-        {
+        } else {
             return "";
         }
     }
 
-    private void logDivider(int logType)
-    {
+    private void logDivider(int logType) {
         logChunk(logType, MIDDLE_BORDER);
     }
 
-    private void logMethodCountInfo(int priority, int methodCount)
-    {
-        if(methodCount <= 0)
-        {
+    private void logMethodCountInfo(int priority, int methodCount) {
+        if(methodCount <= 0) {
             return;
         }
 
@@ -217,11 +212,9 @@ public class Printer implements IPrinter
 
         StringBuilder builder = new StringBuilder();
 
-        for(int i = methodCount; i > 0; i--)
-        {
+        for(int i = methodCount; i > 0; i--) {
             int stackIndex = i + stackOffset;
-            if(stackIndex >= trace.length)
-            {
+            if(stackIndex >= trace.length) {
                 continue;
             }
 
@@ -242,48 +235,38 @@ public class Printer implements IPrinter
         }
     }
 
-    private void logTopBorder(int logType)
-    {
+    private void logTopBorder(int logType) {
         logChunk(logType, settings.isShowBottomLogBorder() ? TOP_BORDER :
                 needConnectBorder() ? TOP_CONNECT_BORDER : TOP_BORDER);
     }
 
-    private boolean needConnectBorder()
-    {
+    private boolean needConnectBorder() {
         long timeMillis = System.currentTimeMillis();
         boolean need = timeMillis - lastTimeMillis < CONNECT_BORDER_INTERVAL;
         lastTimeMillis = timeMillis;
         return need;
     }
 
-    private void logBottomBorder(int logType)
-    {
+    private void logBottomBorder(int logType) {
         logChunk(logType, BOTTOM_BORDER);
     }
 
-    private void log(int priority, String message)
-    {
+    private void log(int priority, String message) {
         byte[] bytes = message.getBytes();
         int length = bytes.length;
-        if(message.length() < CHUNK_SIZE)
-        {
+        if(message.length() < CHUNK_SIZE) {
             logChunk(priority, VERTICAL_DOUBLE_LINE + " " + message);
-        }
-        else
-        {
-            for(int i = 0; i < length; i += CHUNK_SIZE)
-            {
+        } else {
+            for(int i = 0; i < length; i += CHUNK_SIZE) {
                 int count = Math.min(length - i, CHUNK_SIZE);
                 logChunk(priority, VERTICAL_DOUBLE_LINE + " " + new String(bytes, i, count));
             }
         }
     }
 
-    private synchronized void logChunk(int priority, String chunk)
-    {
+    private synchronized void logChunk(int priority, String chunk) {
         String tag = getTag();
-        switch(priority)
-        {
+        switch(priority) {
             case Log.ERROR:
                 settings.getLogAdapter().e(tag, chunk);
                 break;
@@ -312,33 +295,27 @@ public class Printer implements IPrinter
      * @param json the json content
      */
     @Override
-    public void json(String json)
-    {
-        if(TextUtils.isEmpty(json))
-        {
+    public void json(String json) {
+        if(TextUtils.isEmpty(json)) {
             d("Empty/Null json content");
             return;
         }
-        try
-        {
+        try {
             json = json.trim();
-            if(json.startsWith("{"))
-            {
+            if(json.startsWith("{")) {
                 JSONObject jsonObject = new JSONObject(json);
                 String message = jsonObject.toString(JSON_INDENT);
                 d(message);
                 return;
             }
-            if(json.startsWith("["))
-            {
+            if(json.startsWith("[")) {
                 JSONArray jsonArray = new JSONArray(json);
                 String message = jsonArray.toString(JSON_INDENT);
                 d(message);
                 return;
             }
             e("Invalid Json");
-        } catch(JSONException e)
-        {
+        } catch(JSONException e) {
             e("Invalid Json");
         }
     }
@@ -349,15 +326,12 @@ public class Printer implements IPrinter
      * @param xml the xml content
      */
     @Override
-    public void xml(String xml)
-    {
-        if(TextUtils.isEmpty(xml))
-        {
+    public void xml(String xml) {
+        if(TextUtils.isEmpty(xml)) {
             d("Empty/Null xml content");
             return;
         }
-        try
-        {
+        try {
             Source xmlInput = new StreamSource(new StringReader(xml));
             StreamResult xmlOutput = new StreamResult(new StringWriter());
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
@@ -365,8 +339,7 @@ public class Printer implements IPrinter
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             transformer.transform(xmlInput, xmlOutput);
             d(xmlOutput.getWriter().toString().replaceFirst(">", ">\n"));
-        } catch(TransformerException e)
-        {
+        } catch(TransformerException e) {
             e("Invalid xml");
         }
 
