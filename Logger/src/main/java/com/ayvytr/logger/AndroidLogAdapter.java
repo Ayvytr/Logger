@@ -1,5 +1,6 @@
 package com.ayvytr.logger;
 
+import android.os.Build;
 import android.util.Log;
 
 
@@ -37,6 +38,8 @@ public final class AndroidLogAdapter implements LogAdapter {
 
     @Override
     public void wtf(String tag, String message) {
-        Log.wtf(tag, message);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            Log.wtf(tag, message);
+        }
     }
 }
