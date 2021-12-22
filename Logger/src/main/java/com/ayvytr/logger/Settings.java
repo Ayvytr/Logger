@@ -8,8 +8,7 @@ import android.text.TextUtils;
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
  */
-public final class Settings
-{
+public final class Settings {
     static final String DEFAULT_TAG = "PRETTYLOGGER";
 
     private int methodCount = 1;
@@ -27,71 +26,58 @@ public final class Settings
     private String tag = DEFAULT_TAG;
     private boolean justShowMessage;
 
-    public Settings hideThreadInfo()
-    {
+    public Settings hideThreadInfo() {
         showThreadInfo = false;
         return this;
     }
 
-    public Settings showThreadInfo(boolean isShow)
-    {
+    public Settings showThreadInfo(boolean isShow) {
         this.showThreadInfo = isShow;
         return this;
     }
 
-    public Settings methodCount(int methodCount)
-    {
-        if(methodCount < 0)
-        {
+    public Settings methodCount(int methodCount) {
+        if(methodCount < 0) {
             methodCount = 0;
         }
         this.methodCount = methodCount;
         return this;
     }
 
-    public Settings methodOffset(int offset)
-    {
+    public Settings methodOffset(int offset) {
         this.methodOffset = offset;
         return this;
     }
 
-    public int getMethodCount()
-    {
+    public int getMethodCount() {
         return methodCount;
     }
 
-    public boolean isShowThreadInfo()
-    {
+    public boolean isShowThreadInfo() {
         return showThreadInfo;
     }
 
-    public boolean isShowLog()
-    {
+    public boolean isShowLog() {
         return showLog;
     }
 
-    public int getMethodOffset()
-    {
+    public int getMethodOffset() {
         return methodOffset;
     }
 
-    public Settings logAdapter(LogAdapter LogAdapter)
-    {
+    public Settings logAdapter(LogAdapter LogAdapter) {
         this.LogAdapter = LogAdapter;
         return this;
     }
 
-    public LogAdapter getLogAdapter()
-    {
-        if(LogAdapter == null)
-        {
+    public LogAdapter getLogAdapter() {
+        if(LogAdapter == null) {
             LogAdapter = new AndroidLogAdapter();
         }
         return LogAdapter;
     }
 
-    public void reset()
-    {
+    public void reset() {
         methodCount = 1;
         methodOffset = 0;
         showThreadInfo = false;
@@ -99,44 +85,36 @@ public final class Settings
         showBottomLogBorder = false;
     }
 
-    public boolean isShowBottomLogBorder()
-    {
+    public boolean isShowBottomLogBorder() {
         return showBottomLogBorder;
     }
 
-    public Settings showBottomBorder(boolean showBottomBorder)
-    {
+    public Settings showBottomBorder(boolean showBottomBorder) {
         this.showBottomLogBorder = showBottomBorder;
         return this;
     }
 
-    public Settings tag(String tag)
-    {
-        if(!TextUtils.isEmpty(tag))
-        {
+    public Settings tag(String tag) {
+        if(!TextUtils.isEmpty(tag)) {
             this.tag = tag;
         }
         return this;
     }
 
-    public String getTag()
-    {
+    public String getTag() {
         return tag;
     }
 
-    public Settings justShowMessage(boolean justShowMessage)
-    {
+    public Settings justShowMessage(boolean justShowMessage) {
         this.justShowMessage = justShowMessage;
         return this;
     }
 
-    public boolean isJustShowMessage()
-    {
+    public boolean isJustShowMessage() {
         return justShowMessage;
     }
 
-    public void showLog(boolean showLog)
-    {
+    public void showLog(boolean showLog) {
         this.showLog = showLog;
     }
 }

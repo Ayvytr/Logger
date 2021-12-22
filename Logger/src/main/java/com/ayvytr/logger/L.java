@@ -9,43 +9,35 @@ package com.ayvytr.logger;
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
  */
-public final class L
-{
+public final class L {
     private static Settings settings = new Settings();
     private static Printer printer = new Printer(settings);
 
-    private L()
-    {
+    private L() {
         throw new UnsupportedOperationException();
     }
 
-    public static void v(Object... objects)
-    {
+    public static void v(Object... objects) {
         printer.v(objects);
     }
 
-    public static void d(Object... objects)
-    {
+    public static void d(Object... objects) {
         printer.d(objects);
     }
 
-    public static void i(Object... objects)
-    {
+    public static void i(Object... objects) {
         printer.i(objects);
     }
 
-    public static void w(Object... objects)
-    {
+    public static void w(Object... objects) {
         printer.w(objects);
     }
 
-    public static void e(Object... objects)
-    {
+    public static void e(Object... objects) {
         printer.e(objects);
     }
 
-    public static void wtf(Object... objects)
-    {
+    public static void wtf(Object... objects) {
         printer.wtf(objects);
     }
 
@@ -54,8 +46,7 @@ public final class L
      *
      * @return the settings object
      */
-    public static Settings settings()
-    {
+    public static Settings settings() {
         return settings;
     }
 
@@ -65,8 +56,7 @@ public final class L
      *
      * @param json the json content
      */
-    public static void json(String json)
-    {
+    public static void json(String json) {
         printer.json(json);
     }
 
@@ -75,8 +65,7 @@ public final class L
      *
      * @param xml the xml content
      */
-    public static void xml(String xml)
-    {
+    public static void xml(String xml) {
         printer.xml(xml);
     }
 }

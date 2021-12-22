@@ -6,8 +6,7 @@ package com.ayvytr.logger;
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
  */
-public interface LogAdapter
-{
+public interface LogAdapter {
     /**
      * @param tag     Tag
      * @param message Message

@@ -6,8 +6,7 @@ package com.ayvytr.logger;
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
  */
-public interface IPrinter
-{
+public interface IPrinter {
     void json(String json);
 
     void xml(String xml);

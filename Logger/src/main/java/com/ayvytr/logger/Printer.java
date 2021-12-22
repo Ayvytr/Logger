@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.lang.reflect.Array;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -132,36 +131,13 @@ public class Printer implements IPrinter {
     }
 
     private String buildMessage(Object... args) {
-        //防止直接传入null
-        if(args == null) {
-            return "null";
-        }
-
         if(args.length == 0) {
             return "[Empty Log]";
         }
 
         StringBuffer msgBuffer = new StringBuffer();
         for(Object arg : args) {
-            if(arg == null) {
-                //防止数组等对象为null
-                msgBuffer.append("null");
-            } else if(arg.getClass().getName().startsWith("[")) {
-                msgBuffer.append("[");
-                try {
-                    for(int i = 0; ; i++) {
-                        msgBuffer.append(Array.get(arg, i));
-                        msgBuffer.append(",");
-                    }
-                } catch(IndexOutOfBoundsException e) {
-                    if(msgBuffer.length() > 0) {
-                        msgBuffer.deleteCharAt(msgBuffer.length() - 1);
-                    }
-                }
-                msgBuffer.append("]");
-            } else {
-                msgBuffer.append(arg);
-            }
+            msgBuffer.append(arg);
             msgBuffer.append(" ");
         }
 
@@ -219,16 +195,16 @@ public class Printer implements IPrinter {
             }
 
             builder.append("║ ")
-                   .append(spaces)
-                   .append(getSimpleClassName(trace[stackIndex].getClassName()))
-                   .append(".")
-                   .append(trace[stackIndex].getMethodName())
-                   .append(" ")
-                   .append(" (")
-                   .append(trace[stackIndex].getFileName())
-                   .append(":")
-                   .append(trace[stackIndex].getLineNumber())
-                   .append(")");
+                    .append(spaces)
+                    .append(getSimpleClassName(trace[stackIndex].getClassName()))
+                    .append(".")
+                    .append(trace[stackIndex].getMethodName())
+                    .append(" ")
+                    .append(" (")
+                    .append(trace[stackIndex].getFileName())
+                    .append(":")
+                    .append(trace[stackIndex].getLineNumber())
+                    .append(")");
             logChunk(priority, builder.toString());
             builder.delete(0, builder.length());
             spaces += "   ";
