@@ -2,9 +2,10 @@ package com.ayvytr.logger;
 
 
 /**
- * Log打印类，所有打印从这里开始.
- * L is a wrapper of {@link android.util.Log}
- * But more pretty, simple and powerful.
+ * 漂亮，简单，强大的Log打印类，支持格式化json: L.json(str)，xml: L.xml(str).
+ * <p>
+ * 2021-12-23 目前碰到问题：转换为kotlin代码后的vararg objects: Any?，decompile的java代码会加上非空
+ * 判断，传空导致空指针异常，有知道怎么解决的老铁请邮件我.
  *
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
