@@ -130,8 +130,8 @@ public class Printer implements IPrinter {
     }
 
     private String buildMessage(Object... args) {
-        if(args.length == 0) {
-            return "[Empty Log]";
+        if(args == null || args.length == 0) {
+            return "[Null Or Empty]";
         }
 
         StringBuffer msgBuffer = new StringBuffer();
