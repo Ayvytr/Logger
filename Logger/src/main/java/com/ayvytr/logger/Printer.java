@@ -13,7 +13,6 @@ import java.io.StringWriter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -131,8 +130,8 @@ public class Printer implements IPrinter {
     }
 
     private String buildMessage(Object... args) {
-        if(args.length == 0) {
-            return "[Empty Log]";
+        if(args == null || args.length == 0) {
+            return "[Null Or Empty]";
         }
 
         StringBuffer msgBuffer = new StringBuffer();
@@ -308,14 +307,19 @@ public class Printer implements IPrinter {
             return;
         }
         try {
-            Source xmlInput = new StreamSource(new StringReader(xml));
-            StreamResult xmlOutput = new StreamResult(new StringWriter());
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            transformer.transform(xmlInput, xmlOutput);
-            d(xmlOutput.getWriter().toString().replaceFirst(">", ">\n"));
-        } catch(TransformerException e) {
+            Source xmlInput = null;
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
+                xmlInput = new StreamSource(new StringReader(xml));
+                StreamResult xmlOutput = new StreamResult(new StringWriter());
+                Transformer transformer = TransformerFactory.newInstance().newTransformer();
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+                transformer.transform(xmlInput, xmlOutput);
+                d(xmlOutput.getWriter().toString().replaceFirst(">", ">\n"));
+            } else {
+                d(xml);
+            }
+        } catch(Exception e) {
             e("Invalid xml");
         }
 
