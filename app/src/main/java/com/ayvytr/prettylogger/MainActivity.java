@@ -1,12 +1,13 @@
 package com.ayvytr.prettylogger;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.ayvytr.logger.L;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 

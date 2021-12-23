@@ -1,7 +1,7 @@
 package com.ayvytr.prettylogger
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.ayvytr.logger.L
 import java.util.*
 
@@ -15,12 +15,11 @@ class TestKotlinLogActivity : AppCompatActivity()
         logTest()
     }
 
-    private fun logTest()
-    {
-                log()
-                log1()
-                log2()
-                log3();
+    private fun logTest() {
+        log()
+        log1()
+        log2()
+        log3();
         //        log4();
         //        log5();
         //        log6();

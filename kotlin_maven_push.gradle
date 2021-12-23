@@ -1,6 +1,5 @@
 apply plugin: "com.vanniktech.maven.publish"
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: "com.vanniktech.maven.publish.base"
 
 allprojects {
     plugins.withId("com.vanniktech.maven.publish") {
@@ -10,21 +9,50 @@ allprojects {
     }
 }
 
-def dokkaOutputDir = "$buildDir/javadoc"
+//def dokkaOutputDir = "$buildDir/javadoc"
+//
+//tasks.named("dokkaHtml") {
+//    outputDirectory.set(new File(dokkaOutputDir))
+//    offlineMode.set(true)
+//}
+//
+//tasks.named("dokkaJavadoc") {
+//    outputDirectory.set(new File(dokkaOutputDir))
+//    offlineMode.set(true)
+//}
+//
+//task javadocJar(type: Jar, dependsOn: tasks.named("dokkaHtml")) {
+//    classifier('javadoc')
+//	from dokkaOutputDir
+//}
+//
+//tasks.publish.dependsOn(javadocJar)
+//tasks.publishToMavenLocal.dependsOn(javadocJar)
 
-tasks.named("dokkaHtml") {
-    outputDirectory.set(new File(dokkaOutputDir))
-    offlineMode.set(true)
+task javadoc(type: Javadoc) {
+    // Exclude generated files
+    exclude '**/BuildConfig.java'
+    exclude '**/R.java'
+    source = android.sourceSets.main.java.srcDirs
+    failOnError false
+    classpath += configurations.compile
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
-tasks.named("dokkaJavadoc") {
-    outputDirectory.set(new File(dokkaOutputDir))
-    offlineMode.set(true)
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
-task javadocJar(type: Jar, dependsOn: tasks.named("dokkaHtml")) {
-    classifier('javadoc')
-	from dokkaOutputDir
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+        title POM_NAME
+    }
 }
 
 tasks.publish.dependsOn(javadocJar)
