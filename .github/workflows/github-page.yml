@@ -27,7 +27,7 @@ jobs:
       - uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 6.7.1
-          arguments: Logger:javadoc
+          arguments: logger:javadoc
 
       # 部署到 GitHub Pages
       - name: Deploy
@@ -36,6 +36,6 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           REPOSITORY_NAME: ayvytr/ayvytr.github.io
           BRANCH: master
-          FOLDER: ./Logger/build/docs/javadoc
+          FOLDER: ./logger/build/docs/javadoc
           CLEAN: false
-          TARGET_FOLDER: javadocs/Logger
+          TARGET_FOLDER: javadocs/logger
