@@ -1,9 +1,4 @@
-<img align="right" src='https://github.com/ayvytr/logger/blob/master/photos/logger/logger-logo.png' width='128' height='128'/>
-
-<span id = "jump"></span>
-
-[![GitHub release](https://img.shields.io/github/release/Ayvytr/Logger.svg)](https://github.com/Ayvytr/Logger/releases)
-[![JCenter](https://img.shields.io/badge/jCenter-3.3.0-green.svg)](https://bintray.com/ayvytr/maven/Logger/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ayvytr/Logger.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ayvytr%22%20AND%20a:%22Logger%22)
 [![License](https://img.shields.io/badge/License-Apache--2.0%20-blue.svg)](license)
 
 
@@ -20,9 +15,9 @@
 	- 跳转到源代码
 	- 你想要的各种输出效果
 
-## JCenter
+## MavenCentral（L大写，直接复制）
 
-	implementation 'com.ayvytr:logger:3.3.0'
+	implementation 'io.github.ayvytr:Logger:3.3.1'
 
 
 ## 使用
