@@ -48,6 +48,7 @@ public class AndroidLogPrinter implements IPrinter {
     private static final String MIDDLE_BORDER = MIDDLE_CORNER + SINGLE_DIVIDER + SINGLE_DIVIDER;
 
     private static final int CONNECT_BORDER_INTERVAL = 1000;
+    private static final String NULL_VALUE = "[NULL]";
 
     private long lastTimeMillis;
 
@@ -68,7 +69,6 @@ public class AndroidLogPrinter implements IPrinter {
 
     @Override
     public void i(Object... objects) {
-
         disposeLog(Log.INFO, objects);
     }
 
@@ -118,12 +118,16 @@ public class AndroidLogPrinter implements IPrinter {
 
     private String buildMessage(Object... args) {
         if(args == null || args.length == 0) {
-            return "[NULL]";
+            return NULL_VALUE;
         }
 
         StringBuilder msgBuffer = new StringBuilder();
         for(Object arg : args) {
-            msgBuffer.append(arg);
+            if(arg == null) {
+                msgBuffer.append(NULL_VALUE);
+            } else {
+                msgBuffer.append(arg);
+            }
             msgBuffer.append(" ");
         }
 
