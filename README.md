@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.ayvytr/Logger.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ayvytr%22%20AND%20a:%22Logger%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ayvytr/Logger.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ayvytr%22%20AND%20a:%22logger%22)
 [![License](https://img.shields.io/badge/License-Apache--2.0%20-blue.svg)](license)
 
 
@@ -15,9 +15,10 @@
 	- 跳转到源代码
 	- 你想要的各种输出效果
 
-## MavenCentral（L大写，直接复制）
+## MavenCentral
 
-	implementation 'io.github.ayvytr:Logger:3.3.1'
+    //3.3.1可大写，后续版本改为小写
+	implementation 'io.github.ayvytr:logger:3.3.1'
 
 
 ## 使用
