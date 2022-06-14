@@ -131,7 +131,7 @@ public class Printer implements IPrinter {
 
     private String buildMessage(Object... args) {
         if(args == null || args.length == 0) {
-            return "[Null Or Empty]";
+            return "[NULL]";
         }
 
         StringBuffer msgBuffer = new StringBuffer();
