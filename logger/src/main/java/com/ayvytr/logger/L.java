@@ -13,7 +13,7 @@ package com.ayvytr.logger;
 public final class L {
     private static Settings settings = new Settings();
 
-    private static AndroidLogPrinter printer = new AndroidLogPrinter(settings);
+    private static AndroidLogPrinter printer = new AndroidLogPrinter();
 
     private L() {
         throw new UnsupportedOperationException();

@@ -54,11 +54,7 @@ public class AndroidLogPrinter implements IPrinter {
     /**
      * It is used to determine log settings such as method count, thread info visibility
      */
-    private Settings settings;
-
-    public AndroidLogPrinter(Settings settings) {
-        this.settings = settings;
-    }
+    private Settings settings = L.settings();
 
     @Override
     public void v(Object... objects) {

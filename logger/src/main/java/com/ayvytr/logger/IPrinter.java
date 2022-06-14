@@ -5,6 +5,7 @@ package com.ayvytr.logger;
  *
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
+ * @see android.util.Log
  */
 public interface IPrinter {
     void json(String json);
