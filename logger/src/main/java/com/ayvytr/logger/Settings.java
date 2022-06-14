@@ -16,7 +16,6 @@ public final class Settings {
     private int methodOffset = 0;
     //是否显示底部Border，默认不显示
     private boolean showBottomLogBorder;
-    private LogAdapter LogAdapter;
 
     /**
      * show log or not
@@ -63,18 +62,6 @@ public final class Settings {
 
     public int getMethodOffset() {
         return methodOffset;
-    }
-
-    public Settings logAdapter(LogAdapter LogAdapter) {
-        this.LogAdapter = LogAdapter;
-        return this;
-    }
-
-    public LogAdapter getLogAdapter() {
-        if(LogAdapter == null) {
-            LogAdapter = new AndroidLogAdapter();
-        }
-        return LogAdapter;
     }
 
     public void reset() {

@@ -12,7 +12,8 @@ package com.ayvytr.logger;
  */
 public final class L {
     private static Settings settings = new Settings();
-    private static Printer printer = new Printer(settings);
+
+    private static AndroidLogPrinter printer = new AndroidLogPrinter(settings);
 
     private L() {
         throw new UnsupportedOperationException();
@@ -61,12 +62,4 @@ public final class L {
         printer.json(json);
     }
 
-    /**
-     * Formats the json content and print it
-     *
-     * @param xml the xml content
-     */
-    public static void xml(String xml) {
-        printer.xml(xml);
-    }
 }

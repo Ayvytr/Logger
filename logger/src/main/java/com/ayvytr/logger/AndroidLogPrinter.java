@@ -1,5 +1,6 @@
 package com.ayvytr.logger;
 
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -7,23 +8,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
 /**
  * Log打印实现类
  *
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
  * @since 1.0.0
  */
-public class Printer implements IPrinter {
+public class AndroidLogPrinter implements IPrinter {
     /**
      * Android's max limit for a log entry is ~4076 bytes,
      * so 4000 bytes is used as chunk size since default charset
@@ -65,7 +56,7 @@ public class Printer implements IPrinter {
      */
     private Settings settings;
 
-    public Printer(Settings settings) {
+    public AndroidLogPrinter(Settings settings) {
         this.settings = settings;
     }
 
@@ -122,7 +113,7 @@ public class Printer implements IPrinter {
         for(int i = MIN_STACK_OFFSET; i < trace.length; i++) {
             StackTraceElement e = trace[i];
             String name = e.getClassName();
-            if(!name.equals(Printer.class.getName()) && !name.equals(L.class.getName())) {
+            if(!name.equals(AndroidLogPrinter.class.getName()) && !name.equals(L.class.getName())) {
                 return --i;
             }
         }
@@ -134,7 +125,7 @@ public class Printer implements IPrinter {
             return "[NULL]";
         }
 
-        StringBuffer msgBuffer = new StringBuffer();
+        StringBuilder msgBuffer = new StringBuilder();
         for(Object arg : args) {
             msgBuffer.append(arg);
             msgBuffer.append(" ");
@@ -243,23 +234,25 @@ public class Printer implements IPrinter {
         String tag = getTag();
         switch(priority) {
             case Log.ERROR:
-                settings.getLogAdapter().e(tag, chunk);
+                Log.e(tag, chunk);
                 break;
             case Log.INFO:
-                settings.getLogAdapter().i(tag, chunk);
+                Log.i(tag, chunk);
                 break;
             case Log.WARN:
-                settings.getLogAdapter().w(tag, chunk);
+                Log.w(tag, chunk);
                 break;
             case Log.ASSERT:
-                settings.getLogAdapter().wtf(tag, chunk);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+                    Log.wtf(tag, chunk);
+                }
                 break;
             case Log.DEBUG:
-                settings.getLogAdapter().d(tag, chunk);
+                Log.d(tag, chunk);
                 break;
             //默认为VERBOSE
             default:
-                settings.getLogAdapter().v(tag, chunk);
+                Log.v(tag, chunk);
                 break;
         }
     }
@@ -295,33 +288,4 @@ public class Printer implements IPrinter {
         }
     }
 
-    /**
-     * Formats the json content and print it
-     *
-     * @param xml the xml content
-     */
-    @Override
-    public void xml(String xml) {
-        if(TextUtils.isEmpty(xml)) {
-            d("Empty/Null xml content");
-            return;
-        }
-        try {
-            Source xmlInput = null;
-            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.FROYO) {
-                xmlInput = new StreamSource(new StringReader(xml));
-                StreamResult xmlOutput = new StreamResult(new StringWriter());
-                Transformer transformer = TransformerFactory.newInstance().newTransformer();
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-                transformer.transform(xmlInput, xmlOutput);
-                d(xmlOutput.getWriter().toString().replaceFirst(">", ">\n"));
-            } else {
-                d(xml);
-            }
-        } catch(Exception e) {
-            e("Invalid xml");
-        }
-
-    }
 }

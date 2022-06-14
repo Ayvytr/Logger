@@ -9,8 +9,6 @@ package com.ayvytr.logger;
 public interface IPrinter {
     void json(String json);
 
-    void xml(String xml);
-
     void v(Object... objects);
 
     void d(Object... objects);
