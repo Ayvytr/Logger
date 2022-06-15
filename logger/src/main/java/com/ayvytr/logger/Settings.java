@@ -23,7 +23,13 @@ public final class Settings {
     private boolean showLog = true;
 
     private String tag = DEFAULT_TAG;
+
     private boolean justShowMessage;
+
+    /**
+     * 单行字符串最大长度
+     */
+    int maxLineLength = 160;
 
     public Settings hideThreadInfo() {
         showThreadInfo = false;
@@ -103,5 +109,12 @@ public final class Settings {
 
     public void showLog(boolean showLog) {
         this.showLog = showLog;
+    }
+
+    public Settings maxLineLength(int maxLineLength) {
+        if(maxLineLength > 0) {
+            this.maxLineLength = maxLineLength;
+        }
+        return this;
     }
 }

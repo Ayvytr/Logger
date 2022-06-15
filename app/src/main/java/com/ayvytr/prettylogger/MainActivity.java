@@ -15,11 +15,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         logTest();
     }
 
     private void logTest() {
-//        log();
+        log();
         log1();
 //        log2();
 //        log3();
@@ -27,14 +32,25 @@ public class MainActivity extends AppCompatActivity {
 //        log5();
 //        log6();
 //        log7();
-//        log8();
-//        logWtf();
+        log8();
+        logWtf();
         logShowCalledInfo();
         logArray();
+
+        logLongStr();
+    }
+
+    private void logLongStr() {
+        L.e("=-=-=-=-=--=-=-=-=-=-=-=");
+        List<String> list = new ArrayList<>();
+        for(int i = 0; i < 10; i++) {
+            list.add("abcdefghj");
+        }
+        L.e(list, list, list, list);
     }
 
     private void logArray() {
-        String[] stringArray = new String[10];
+        String[] stringArray = new String[30];
         for(int i = 0; i < stringArray.length; i++) {
             stringArray[i] = "item" + i;
         }
@@ -45,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
             intArray[i] = i * i;
         }
         L.e(intArray);
+        L.e(new boolean[]{true, false, true});
+        L.e(new Object[]{1, "111", 123423423423L});
+        L.e(new byte[]{'c','a','b'});
+        L.e(new Character[]{'v', 'd', '-'});
+        L.e(new short[]{-1,-222, 1});
+        L.e(new long[]{2434, 2342, -111});
+        L.e(new float[]{1.1F, 2.2F, 0.0F});
+        L.e(new double[]{33.22, 3333.32, 2.2});
     }
 
     private void logShowCalledInfo() {
@@ -53,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logWtf() {
-        L.settings().justShowMessage(true).tag("logger");
+//        L.settings().justShowMessage(true).tag("logger");
         L.wtf();
     }
 

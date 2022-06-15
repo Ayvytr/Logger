@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+
 /**
  * Log打印实现类
  *
@@ -15,12 +17,6 @@ import org.json.JSONObject;
  * @since 1.0.0
  */
 public class AndroidLogPrinter implements IPrinter {
-    /**
-     * Android's max limit for a log entry is ~4076 bytes,
-     * so 4000 bytes is used as chunk size since default charset
-     * is UTF-8
-     */
-    private static final int CHUNK_SIZE = 4000;
 
     /**
      * It is used for json pretty print
@@ -32,14 +28,11 @@ public class AndroidLogPrinter implements IPrinter {
      */
     private static final int MIN_STACK_OFFSET = 3;
 
-    /**
-     * Drawing toolbox
-     */
-    private static final char TOP_LEFT_CORNER = '╔';
-    private static final char TOP_LEFT_CONNECT_CORNER = '╠';
-    private static final char BOTTOM_LEFT_CORNER = '╚';
-    private static final char MIDDLE_CORNER = '╟';
-    private static final char VERTICAL_DOUBLE_LINE = '║';
+    private static final String TOP_LEFT_CORNER = "╔";
+    private static final String TOP_LEFT_CONNECT_CORNER = "╠";
+    private static final String BOTTOM_LEFT_CORNER = "╚";
+    private static final String MIDDLE_CORNER = "╟";
+    private static final String VERTICAL_DOUBLE_LINE = "║";
     private static final String DOUBLE_DIVIDER = "════════════════════════════════════════════";
     private static final String SINGLE_DIVIDER = "────────────────────────────────────────────";
     private static final String TOP_BORDER = TOP_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
@@ -52,9 +45,6 @@ public class AndroidLogPrinter implements IPrinter {
 
     private long lastTimeMillis;
 
-    /**
-     * It is used to determine log settings such as method count, thread info visibility
-     */
     private Settings settings = L.settings();
 
     @Override
@@ -116,39 +106,84 @@ public class AndroidLogPrinter implements IPrinter {
         return -1;
     }
 
-    private String buildMessage(Object... args) {
-        if(args == null || args.length == 0) {
-            return NULL_VALUE;
-        }
-
-        StringBuilder msgBuffer = new StringBuilder();
-        for(Object arg : args) {
-            if(arg == null) {
-                msgBuffer.append(NULL_VALUE);
-            } else {
-                msgBuffer.append(arg);
-            }
-            msgBuffer.append(" ");
-        }
-
-        return msgBuffer.toString();
-    }
-
     private void disposeLog(int priority, Object... objects) {
         if(!settings.isShowLog()) {
             return;
         }
 
-        String message = buildMessage(objects);
-        if(settings.isJustShowMessage()) {
-            log(priority, message);
-        } else {
+        if(!settings.isJustShowMessage()) {
             logTopBorder(priority);
-            log(priority, getThreadInfo() + message);
-            logMethodCountInfo(priority, settings.getMethodCount());
+        }
 
-            if(settings.isShowBottomLogBorder()) {
-                logBottomBorder(priority);
+        logFormat(priority, objects);
+
+        if(!settings.isJustShowMessage()) {
+            logMethodCountInfo(priority, settings.getMethodCount());
+        }
+
+        if(settings.isShowBottomLogBorder()) {
+            logBottomBorder(priority);
+        }
+    }
+
+    private void logFormat(int priority, Object... args) {
+        if(args == null || args.length == 0) {
+            logChunk(priority, VERTICAL_DOUBLE_LINE + getThreadInfo() + NULL_VALUE);
+            return;
+        }
+
+        if(args.length == 1) {
+            logChunk(priority, VERTICAL_DOUBLE_LINE + getThreadInfo()
+                    + objectToString(args[0]));
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder(VERTICAL_DOUBLE_LINE).append(getThreadInfo());
+        sb.append(objectToString(args[0]));
+        sb.append(" ");
+
+        int i = 1;
+        while(i < args.length) {
+            Object arg = args[i];
+
+            int length = arg == null ? 6 : arg.toString().length();
+            if(sb.length() + length <= settings.maxLineLength) {
+                sb.append(objectToString(arg));
+                sb.append(" ");
+            } else {
+                logChunk(priority, sb.toString());
+
+                sb = new StringBuilder(VERTICAL_DOUBLE_LINE).append(getThreadInfo());
+                sb.append(objectToString(arg));
+                sb.append(" ");
+            }
+
+            i++;
+        }
+
+        logChunk(priority, sb.toString());
+
+    }
+
+    private String objectToString(Object arg) {
+        if(arg == null) {
+            return NULL_VALUE;
+        } else {
+            if(arg.getClass().getSimpleName().endsWith("[]")) {
+                int length = Array.getLength(arg);
+                StringBuilder b = new StringBuilder();
+                b.append('[');
+                for(int i = 0; i < length; i++) {
+                    b.append(Array.get(arg, i));
+                    b.append(", ");
+                }
+                if(length > 0) {
+                    b.deleteCharAt(b.length() - 1);
+                    b.deleteCharAt(b.length() - 1);
+                }
+                return b.append(']').toString();
+            } else {
+                return arg.toString();
             }
         }
     }
@@ -215,19 +250,6 @@ public class AndroidLogPrinter implements IPrinter {
 
     private void logBottomBorder(int logType) {
         logChunk(logType, BOTTOM_BORDER);
-    }
-
-    private void log(int priority, String message) {
-        byte[] bytes = message.getBytes();
-        int length = bytes.length;
-        if(message.length() < CHUNK_SIZE) {
-            logChunk(priority, VERTICAL_DOUBLE_LINE + " " + message);
-        } else {
-            for(int i = 0; i < length; i += CHUNK_SIZE) {
-                int count = Math.min(length - i, CHUNK_SIZE);
-                logChunk(priority, VERTICAL_DOUBLE_LINE + " " + new String(bytes, i, count));
-            }
-        }
     }
 
     private synchronized void logChunk(int priority, String chunk) {
