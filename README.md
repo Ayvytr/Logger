@@ -17,8 +17,8 @@
 
 ## MavenCentral
 
-    //3.3.1可大写，后续版本改为小写
-	implementation 'io.github.ayvytr:logger:3.3.1'
+    //3.3.1 logger的L可大写，后续版本改为小写
+    implementation 'io.github.ayvytr:logger:3.3.2'
 
 
 ## 使用
@@ -210,4 +210,11 @@ settings.LogAdapter(new CustomLogAdapter())
 - Release使用LogLevel.NONE不输出任何日志
 
 
-### [动动你发财的小手，点个Star吧！](#head)
+
+
+
+## ChangeLog
+
+* 3.3.2
+  * 限制行默认长度为160
+  * 删除json和xml打印方法
