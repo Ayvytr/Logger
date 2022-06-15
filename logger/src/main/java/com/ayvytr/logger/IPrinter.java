@@ -8,8 +8,6 @@ package com.ayvytr.logger;
  * @see android.util.Log
  */
 public interface IPrinter {
-    void json(String json);
-
     void v(Object... objects);
 
     void d(Object... objects);

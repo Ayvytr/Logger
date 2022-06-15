@@ -1,12 +1,7 @@
 package com.ayvytr.logger;
 
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 
@@ -276,37 +271,6 @@ public class AndroidLogPrinter implements IPrinter {
             default:
                 Log.v(tag, chunk);
                 break;
-        }
-    }
-
-    /**
-     * Formats the json content and print it
-     *
-     * @param json the json content
-     */
-    @Override
-    public void json(String json) {
-        if(TextUtils.isEmpty(json)) {
-            d("Empty/Null json content");
-            return;
-        }
-        try {
-            json = json.trim();
-            if(json.startsWith("{")) {
-                JSONObject jsonObject = new JSONObject(json);
-                String message = jsonObject.toString(JSON_INDENT);
-                d(message);
-                return;
-            }
-            if(json.startsWith("[")) {
-                JSONArray jsonArray = new JSONArray(json);
-                String message = jsonArray.toString(JSON_INDENT);
-                d(message);
-                return;
-            }
-            e("Invalid Json");
-        } catch(JSONException e) {
-            e("Invalid Json");
         }
     }
 

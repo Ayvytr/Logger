@@ -52,14 +52,4 @@ public final class L {
         return settings;
     }
 
-
-    /**
-     * Formats the json content and print it
-     *
-     * @param json the json content
-     */
-    public static void json(String json) {
-        printer.json(json);
-    }
-
 }
