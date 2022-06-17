@@ -123,17 +123,17 @@ public class AndroidLogPrinter implements IPrinter {
 
     private void logFormat(int priority, Object... args) {
         if(args == null || args.length == 0) {
-            logChunk(priority, VERTICAL_DOUBLE_LINE + getThreadInfo() + NULL_VALUE);
+            logChunk(priority, getLeftLineOrNot() + getThreadInfo() + NULL_VALUE);
             return;
         }
 
         if(args.length == 1) {
-            logChunk(priority, VERTICAL_DOUBLE_LINE + getThreadInfo()
+            logChunk(priority, getLeftLineOrNot() + getThreadInfo()
                     + objectToString(args[0]));
             return;
         }
 
-        StringBuilder sb = new StringBuilder(VERTICAL_DOUBLE_LINE).append(getThreadInfo());
+        StringBuilder sb = new StringBuilder(getLeftLineOrNot()).append(getThreadInfo());
         sb.append(objectToString(args[0]));
         sb.append(" ");
 
@@ -148,7 +148,7 @@ public class AndroidLogPrinter implements IPrinter {
             } else {
                 logChunk(priority, sb.toString());
 
-                sb = new StringBuilder(VERTICAL_DOUBLE_LINE).append(getThreadInfo());
+                sb = new StringBuilder(getLeftLineOrNot()).append(getThreadInfo());
                 sb.append(objectToString(arg));
                 sb.append(" ");
             }
@@ -158,6 +158,13 @@ public class AndroidLogPrinter implements IPrinter {
 
         logChunk(priority, sb.toString());
 
+    }
+
+    private String getLeftLineOrNot() {
+        if(L.settings().isJustShowMessage()) {
+            return "";
+        }
+        return VERTICAL_DOUBLE_LINE + " ";
     }
 
     private String objectToString(Object arg) {

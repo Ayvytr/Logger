@@ -8,6 +8,7 @@ package com.ayvytr.logger;
  * 判断，传空导致空指针异常，有知道怎么解决的老铁请邮件我.
  *
  * @author Ayvytr ['s GitHub](https://github.com/Ayvytr)
+ * @since 3.3.3 修改日志双竖线后没空格，不对齐问题；修改isJustShowMessage()==true时不显示双竖线
  * @since 3.3.2 限制行默认长度为160；删除json和xml打印方法
  * @since 1.0.0
  */

@@ -18,7 +18,7 @@
 ## MavenCentral
 
     //3.3.1 logger的L可大写，后续版本改为小写
-    implementation 'io.github.ayvytr:logger:3.3.2'
+    implementation 'io.github.ayvytr:logger:3.3.3'
 
 
 ## 使用
@@ -215,6 +215,9 @@ settings.LogAdapter(new CustomLogAdapter())
 
 ## ChangeLog
 
+* 3.3.3
+  * 修改日志双竖线后没空格，不对齐问题
+  * 修改isJustShowMessage()==true时不显示双竖线
 * 3.3.2
   * 限制行默认长度为160
   * 删除json和xml打印方法
