@@ -221,3 +221,4 @@ settings.LogAdapter(new CustomLogAdapter())
 * 3.3.2
   * 限制行默认长度为160
   * 删除json和xml打印方法
+  * 修改空log：[Null or Empty]改为[NULL]
