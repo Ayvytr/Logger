@@ -1,8 +1,10 @@
-apply plugin: 'com.android.library'
-apply from: '../kotlin_maven_push.gradle'
-
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.vanniktech.publish)
+}
 android {
     compileSdkVersion 30
+    namespace "com.ayvytr.logger"
 
     defaultConfig {
         minSdkVersion 1

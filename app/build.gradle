@@ -1,8 +1,13 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+}
+
 
 android {
     compileSdkVersion 30
+    namespace "com.ayvytr.prettylogger"
+
     defaultConfig {
         applicationId "com.ayvytr.prettylogger"
         minSdkVersion 15
@@ -17,6 +22,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 //def testRemoteLib = true
@@ -24,18 +37,17 @@ def testRemoteLib = false
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation libs.androidx.appcompat
 
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestImplementation libs.androidx.espresso.core
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation libs.junit
+
     if (testRemoteLib) {
-        implementation 'com.ayvytr:logger:3.3.0'
+        implementation libs.logger
     } else {
         implementation project(':logger')
     }
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation libs.kotlin.stdlib8
 }
