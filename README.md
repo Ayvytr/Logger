@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.ayvytr/Logger.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ayvytr%22%20AND%20a:%22logger%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ayvytr/logger.svg)](https://img.shields.io/maven-central/v/io.github.ayvytr/logger.svg)
 [![License](https://img.shields.io/badge/License-Apache--2.0%20-blue.svg)](license)
 
 
