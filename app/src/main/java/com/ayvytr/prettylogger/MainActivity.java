@@ -54,21 +54,21 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < stringArray.length; i++) {
             stringArray[i] = "item" + i;
         }
-        L.e(stringArray);
+        L.e((Object) stringArray);
 
         int[] intArray = new int[10];
         for(int i = 0; i < intArray.length; i++) {
             intArray[i] = i * i;
         }
         L.e(intArray);
-        L.e(new boolean[]{true, false, true});
+        L.e((Object) new boolean[]{true, false, true});
         L.e(new Object[]{1, "111", 123423423423L});
-        L.e(new byte[]{'c','a','b'});
-        L.e(new Character[]{'v', 'd', '-'});
-        L.e(new short[]{-1,-222, 1});
-        L.e(new long[]{2434, 2342, -111});
-        L.e(new float[]{1.1F, 2.2F, 0.0F});
-        L.e(new double[]{33.22, 3333.32, 2.2});
+        L.e((Object) new byte[]{'c', 'a', 'b'});
+        L.e((Object) new Character[]{'v', 'd', '-'});
+        L.e((Object) new short[]{-1, -222, 1});
+        L.e((Object) new long[]{2434, 2342, -111});
+        L.e((Object) new float[]{1.1F, 2.2F, 0.0F});
+        L.e((Object) new double[]{33.22, 3333.32, 2.2});
     }
 
     private void logShowCalledInfo() {
@@ -156,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void log1() {
-        L.e(null);
+        L.e((Object) null);
         int[] intArray = null;
-        L.e(intArray);
+        L.e((Object) intArray);
 //        ArrayList<String> list = new ArrayList<>();
 //        list.add("AAA");
 //        list.add("BBB");
